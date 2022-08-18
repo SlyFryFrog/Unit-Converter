@@ -51,7 +51,7 @@ def options(user_input):
         ask_conversion()
 
 
-# Celsius to fahrenheit converter
+# Temperature unit converter
 def temp_conversion(orig_unit, new_unit, req_conversion):
     print(f"\nWelcome to the {orig_unit} to {new_unit} converter!\n\nEnter the temperature in {orig_unit} you want to convert to {new_unit}.")
     print(f"Type 'e' to exit and 'm' to return to the main menu.")
