@@ -1,85 +1,114 @@
 # Unit Converter App
-import math
-
-def ask_conversion():
-    available_options = "Celsius to fahrenheit (C to F)\nFahrenheit to celsius (F to C)\nCelsius to kelvin (C to K)\nKelvin to celsius (K to C)\n"
-
-    print(f"Which of the following units would you like to convert? Type what's in the parenthesis.\n{available_options}")
+def temperature_menu():
+    menu_options = ['1', '2', '3', '4', 'm', 'e']
     
-    req_conversion = input("Enter one of the options: ")
- 
-    if req_conversion.lower() == 'c to f':
-        orig_unit = 'celsius'
-        new_unit = 'fahrenheit'
-        temp_conversion(orig_unit, new_unit, req_conversion)
+    # Dictionary of all variables for temp. conv.
+    temperature_conversions = { '1': { 'menu_option' : "Celsius to Fahrenheit",
+                                            'original_unit' : "Celsius",
+                                            'requested_unit' : "Fahrenheit",
+                                            'calculation' : lambda x :(x * 9/5) + 32
+                                        },
+                                '2' : {'menu_option' : "Fahrenheit to Celsius",
+                                            'original_unit' : "Fahrenheit",
+                                            'requested_unit' : "Celsius",
+                                            'calculation' : lambda x :(x - 32) * 5/9
+                                        },
+                                '3' : {'menu_option' : "Celsius to Kelvin",
+                                            'original_unit' : "Celsius",
+                                            'requested_unit' : "Kelvin",
+                                            'calculation' : lambda x :(x - 273.15)
+                                        },
+                                '4' : {'menu_option' : "Kelvin to Celsius",
+                                            'original_unit' : "Kelvin",
+                                            'requested_unit' : "Celsius",
+                                            'calculation' : lambda x :(x + 273.15)
+                                        },
+                                'm' : {'menu_option' : "Main Menu"
+                                        },
+                                'e' : {'menu_option' : "Exit"
+                                        },
+    }
     
-    elif req_conversion.lower() == 'f to c':
-        orig_unit = 'fahrenheit'
-        new_unit = 'celsius'
-        temp_conversion(orig_unit, new_unit, req_conversion)
-
-    elif req_conversion.lower() == 'c to k':
-        orig_unit = 'celsius'
-        new_unit = 'kelvin'
-        temp_conversion(orig_unit, new_unit, req_conversion)
-    
-    elif req_conversion.lower() == 'k to c':
-        orig_unit = 'kelvin'
-        new_unit = 'celsius'
-        temp_conversion(orig_unit, new_unit, req_conversion)
-
-    elif req_conversion == 'e':
-        exit()
-
-    else:
-        print("Please choose an available option from the list.\n\n")
-        ask_conversion()
-
-
-# Checks to see if user entered command or an invalid request
-def options(user_input):
-    if user_input == 'e':
-        print("You have successfully exited the program")
-        exit()
-        
-    elif user_input == 'm':
-        # Returns user to main menu
-        ask_conversion()
-
-    else:
-        print("Invalid request, returned to the main menu")
-        ask_conversion()
-
-
-# Temperature unit converter
-def temp_conversion(orig_unit, new_unit, req_conversion):
-    print(f"\nWelcome to the {orig_unit} to {new_unit} converter!\n\nEnter the temperature in {orig_unit} you want to convert to {new_unit}.")
-    print(f"Type 'e' to exit and 'm' to return to the main menu.")
+    print("\nWelcome to the Temperature Converter! Please choose one of the following options:\n")
     
     while True:
-        user_input = input(f"\nEnter {orig_unit} here: ")
+        # Prints list of available conversion options
+        for option in menu_options:
+            print(f"\t{option} - {temperature_conversions[option]['menu_option']}")
         
-        # Checks if user_input is a number or a command
-        try:
-            # Calculates temp conversions
-            if req_conversion == 'c to f':
-                temp = (float(user_input) * 9/5) + 32
+        user_input = input("\nType here: ").lower()
+        print("\n") # Added to separate lines - has not importance
 
-            elif req_conversion == 'f to c':
-                temp = (float(user_input) - 32) * 5/9
+        # Checks which command user typed
+        if user_input == 'e' or user_input == 'm':
+            return commands(user_input)
+        
+        # Prompts user if input is invalid
+        elif user_input in menu_options:
+            temp = int(user_input)
             
-            elif req_conversion == 'c to k':
-                temp = (float(user_input) + 273.15)
+            shortened = menu_options[temp - 1] # Just shortens the following print() for easier reading
             
-            else:
-                temp = (float(user_input) - 273.15)
+            print(f"Enter value in {temperature_conversions[shortened]['original_unit']} to convert to {temperature_conversions[shortened]['requested_unit']}")
+            
+            # Tries to calculate number - if it fails due to letters, etc. being entered, goes to exception
+            try:
+                convert_number = int(input("\nType here: "))
+                answer = temperature_conversions[user_input]['calculation'](convert_number)
+                print(answer)
+            
+            except ValueError:
+                print("Invalid response.\n")
 
-            # Answer
-            print(f"{user_input}°C = {round(temp, 2)}°F")
+        else:
+            print("Invalid option, please try again.")
 
-        except ValueError:
-            return options(user_input)
+# Checks user commands
+def commands(user_input):
+    if user_input == 'm':
+        print(bar)
+        return main_menu()
+    
+    elif user_input == 'e':
+        raise SystemExit
+    
+    else:
+        print("Invalid command.")
+        return main_menu()
 
 
-if __name__ == '__main__':
-    ask_conversion()
+def main_menu():
+    menu_options = {'1' : 'Temperature', 
+                    '2' : 'Length', 
+                    '3' : 'Area', 
+                    '4' : 'Volume',
+                    '5' : 'Weight',
+                    'E' : 'Exit'}
+    
+    # Lists available categories for the user to choose from
+    print("Welcome to the Unit Converter App! Please choose one of the following categories:\n")
+    
+    for key, value in menu_options.items():
+        print(f"\t{key} - {value.title()}")
+    
+    user_input = input("\nWhat category would you like to choose?\n").lower()
+
+
+    if user_input == '1' or user_input == 'temperature':
+        print(bar)
+        return temperature_menu()
+    
+    elif user_input == 'e' or user_input == 'exit':
+        commands(user_input)
+    
+    else:
+        print("\nEither the section you typed is currently unavailable or you typed an invalid response. Please try again.")
+        return main_menu()
+
+
+if __name__ == "__main__":
+    # Global variables
+    global bar 
+    bar = "\n\n=================================================================================================================\n\n"
+    
+    main_menu() # Lists conversion categories 
