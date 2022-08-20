@@ -1,30 +1,53 @@
 # Unit Converter App
 def temperature_menu():
+    round_to = 2 # Temporary location/function until settings is created
     # Dictionary of all variables for temperature conversions
     temperature_conversions = { '1': { 'menu_option' : "Celsius to Fahrenheit",
                                             'original_unit' : "Celsius",
                                             'requested_unit' : "Fahrenheit",
-                                            'calculation' : lambda x :(x * 9/5) + 32
-                                        },
+                                            'calculation' : lambda x :(x * 9/5) + 32,
+                                            'orig_degree' : '°C',
+                                            'new_degree' : '°F'
+                                },
                                 '2' : {'menu_option' : "Fahrenheit to Celsius",
                                             'original_unit' : "Fahrenheit",
                                             'requested_unit' : "Celsius",
-                                            'calculation' : lambda x :(x - 32) * 5/9
-                                        },
+                                            'calculation' : lambda x :(x - 32) * 5/9,
+                                            'orig_degree' : '°F',
+                                            'new_degree' : '°C'
+                                },
                                 '3' : {'menu_option' : "Celsius to Kelvin",
                                             'original_unit' : "Celsius",
                                             'requested_unit' : "Kelvin",
-                                            'calculation' : lambda x :(x - 273.15)
-                                        },
+                                            'calculation' : lambda x :(x - 273.15),
+                                            'orig_degree' : '°C',
+                                            'new_degree' : 'K'
+                                },
                                 '4' : {'menu_option' : "Kelvin to Celsius",
                                             'original_unit' : "Kelvin",
                                             'requested_unit' : "Celsius",
-                                            'calculation' : lambda x :(x + 273.15)
-                                        },
+                                            'calculation' : lambda x :(x + 273.15),
+                                            'orig_degree' : 'K',
+                                            'new_degree' : '°C'
+                                },
+                                '5' : {'menu_option' : "Fahrenheit to Kelvin",
+                                            'original_unit' : "Fahrenheit",
+                                            'requested_unit' : "Kelvin",
+                                            'calculation' : lambda x :(x - 32) * 5/9 + 273.15,
+                                            'orig_degree' : '°F',
+                                            'new_degree' : 'K'
+                                },
+                                '6' : {'menu_option' : "Kelvin to Fahrenheit",
+                                            'original_unit' : "Kelvin",
+                                            'requested_unit' : "Fahrenheit",
+                                            'calculation' : lambda x :(x - 273.15) * 9/5 + 32 ,
+                                            'orig_degree' : 'K',
+                                            'new_degree' : '°F'
+                                },
                                 'm' : {'menu_option' : "Main Menu"
-                                        },
+                                },
                                 'e' : {'menu_option' : "Exit"
-                                        },
+                                },
     }
     print("\nWelcome to the Temperature Converter! Please choose one of the following options:\n")
     
@@ -47,14 +70,14 @@ def temperature_menu():
             # Tries to calculate number - if it fails due to letters, etc. being entered, goes to exception
             try:
                 convert_number = int(input("\nType here: "))
-                answer = temperature_conversions[user_input]['calculation'](convert_number)
-                print(answer)
+                answer = round(temperature_conversions[user_input]['calculation'](convert_number), round_to)
+                print(f"\n{convert_number}{temperature_conversions[user_input]['orig_degree']} - {answer}{temperature_conversions[user_input]['new_degree']}\n")
             
             except ValueError:
                 print("Invalid response.\n")
 
         else:
-            print("Invalid option, please try again.")
+            print("Invalid option, please try again.\n")
 
 # Checks user commands
 def commands(user_input):
@@ -104,4 +127,4 @@ if __name__ == "__main__":
     global bar 
     bar = "\n\n=================================================================================================================\n\n"
     
-    main_menu() # Lists conversion categories 
+    main_menu() # Lists conversion categories
