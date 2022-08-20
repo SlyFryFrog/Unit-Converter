@@ -1,8 +1,6 @@
 # Unit Converter App
 def temperature_menu():
-    menu_options = ['1', '2', '3', '4', 'm', 'e']
-    
-    # Dictionary of all variables for temp. conv.
+    # Dictionary of all variables for temperature conversions
     temperature_conversions = { '1': { 'menu_option' : "Celsius to Fahrenheit",
                                             'original_unit' : "Celsius",
                                             'requested_unit' : "Fahrenheit",
@@ -28,13 +26,12 @@ def temperature_menu():
                                 'e' : {'menu_option' : "Exit"
                                         },
     }
-    
     print("\nWelcome to the Temperature Converter! Please choose one of the following options:\n")
     
     while True:
         # Prints list of available conversion options
-        for option in menu_options:
-            print(f"\t{option} - {temperature_conversions[option]['menu_option']}")
+        for num in temperature_conversions:
+            print(f"\t{num} - {temperature_conversions[num]['menu_option']}")
         
         user_input = input("\nType here: ").lower()
         print("\n") # Added to separate lines - has not importance
@@ -44,12 +41,8 @@ def temperature_menu():
             return commands(user_input)
         
         # Prompts user if input is invalid
-        elif user_input in menu_options:
-            temp = int(user_input)
-            
-            shortened = menu_options[temp - 1] # Just shortens the following print() for easier reading
-            
-            print(f"Enter value in {temperature_conversions[shortened]['original_unit']} to convert to {temperature_conversions[shortened]['requested_unit']}")
+        elif user_input in temperature_conversions:
+            print(f"Enter value in {temperature_conversions[user_input]['original_unit']} to convert to {temperature_conversions[user_input]['requested_unit']}")
             
             # Tries to calculate number - if it fails due to letters, etc. being entered, goes to exception
             try:
