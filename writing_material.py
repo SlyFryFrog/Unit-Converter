@@ -8,11 +8,5 @@ writing_material = {'1' : {'name' : "Temperature Converter",
                      },
                     '3' : {'name' : "Area Converter",
                             'file' : area_conversions
-                     },
-                    '4' : {'name' : "Volume Converter",
-                            'file' : volume_conversions
-                     },
-                    '5' : {'name' : "Weight Converter",
-                            'file' : weight_conversions
-                    }
+                     }
 }

@@ -56,9 +56,7 @@ def commands(user_input):
 def main_menu(bar):
     menu_options = {'1' : 'Temperature', 
                     '2' : 'Length', 
-                    '3' : 'Area', 
-                    '4' : 'Volume',
-                    '5' : 'Weight',
+                    '3' : 'Area',
                     'E' : 'Exit'}
     
     # Lists available categories for the user to choose from
@@ -75,7 +73,7 @@ def main_menu(bar):
         print(bar)
         return conversion_menu(w_num)
     
-    elif user_input == 'e' or user_input == 'exit':
+    elif user_input == 'e':
         commands(user_input)
     
     else:
